@@ -23,5 +23,7 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    compile 'io.github.microutils:kotlin-logging:1.4.4'
+    compile 'org.slf4j:slf4j-simple:1.7.25'
     compile files('lib/asciiPanel.jar')
 }

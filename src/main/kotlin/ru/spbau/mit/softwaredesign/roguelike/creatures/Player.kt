@@ -1,12 +1,15 @@
 package ru.spbau.mit.softwaredesign.roguelike.creatures
 
 import asciiPanel.AsciiPanel
+import mu.KotlinLogging
 import ru.spbau.mit.softwaredesign.roguelike.items.*
 import ru.spbau.mit.softwaredesign.roguelike.world.FieldOfView
 import ru.spbau.mit.softwaredesign.roguelike.world.Point
 import ru.spbau.mit.softwaredesign.roguelike.world.World
 
 class Player(world: World) : Creature(world, '@', AsciiPanel.brightWhite, "player", 100, 7, 20, 5) {
+    private val logger = KotlinLogging.logger {}
+
     val fieldOfView: FieldOfView = FieldOfView(world)
     val inventory: Inventory = Inventory(20)
     val maxFood: Int = 1000
@@ -20,6 +23,7 @@ class Player(world: World) : Creature(world, '@', AsciiPanel.brightWhite, "playe
 
     override fun notify(message: String) {
         messages?.add(message)
+        logger.info(message)
     }
 
     override fun canSee(otherPosition: Point): Boolean = fieldOfView.isVisible(otherPosition)

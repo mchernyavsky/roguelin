@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent
 class WinScreen(terminal: AsciiPanel) : Screen(terminal) {
     override fun repaint() {
         terminal.write("You won!", 1, 1)
-        terminal.writeCenter("-- press [move] to restart --", 22)
+        terminal.writeCenter("-- press [enter] to restart --", 22)
     }
 
     override fun dispatchKeyEvent(key: KeyEvent): Screen =

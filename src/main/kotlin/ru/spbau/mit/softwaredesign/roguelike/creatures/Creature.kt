@@ -75,15 +75,15 @@ abstract class Creature(
         if (health > maxHealth) {
             health = maxHealth
         } else if (health < 1) {
-            world.removeCreature(this)
-            leaveCorpse()
-            notifyAll("die")
+            die()
         }
     }
 
-    private fun leaveCorpse() {
+    fun die() {
+        world.removeCreature(this)
         val corpse = Food('%', color, "$name's corpse", maxHealth / 2)
         world.dropItem(position, corpse)
+        notifyAll("die")
     }
 
     private fun makeSecondPersonView(text: String): String {

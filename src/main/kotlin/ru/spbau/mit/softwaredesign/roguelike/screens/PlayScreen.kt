@@ -7,6 +7,7 @@ import ru.spbau.mit.softwaredesign.roguelike.world.Tile
 import ru.spbau.mit.softwaredesign.roguelike.world.World
 import java.awt.Color
 import java.awt.event.KeyEvent
+import kotlin.system.exitProcess
 
 class PlayScreen(terminal: AsciiPanel) : Screen(terminal) {
     private var world: World = World(90, 32)
@@ -54,6 +55,8 @@ class PlayScreen(terminal: AsciiPanel) : Screen(terminal) {
 
                 KeyEvent.VK_P -> player.pickup()
                 KeyEvent.VK_Q -> if (playerIsTryingToExit()) return exit()
+
+                KeyEvent.VK_ESCAPE -> exitProcess(0)
             }
         }
 

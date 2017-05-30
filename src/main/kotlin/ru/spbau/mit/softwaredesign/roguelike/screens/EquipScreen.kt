@@ -11,9 +11,10 @@ class EquipScreen(terminal: AsciiPanel, player: Player) : InventoryScreen(termin
 
     override fun isAcceptable(item: Item): Boolean = item is Armor || item is Weapon
 
-    override fun use(item: Item) = when (item) {
-        is Armor -> player.equipArmor(item)
-        is Weapon -> player.equipWeapon(item)
-        else -> Unit
+    override fun use(item: Item) {
+        when (item) {
+            is Armor -> if (item == player.armor) player.unequipArmor() else player.equipArmor(item)
+            is Weapon -> if (item == player.weapon) player.unequipWeapon() else player.equipWeapon(item)
+        }
     }
 }

@@ -11,5 +11,5 @@ class LoseScreen(terminal: AsciiPanel) : Screen(terminal) {
     }
 
     override fun dispatchKeyEvent(key: KeyEvent): Screen =
-            if (key.keyCode == KeyEvent.VK_ENTER) PlayScreen(terminal) else this
+        if (key.keyCode == KeyEvent.VK_ENTER) PlayScreen(terminal) else this
 }

@@ -2,13 +2,14 @@ package ru.spbau.mit.softwaredesign.roguelike.creatures
 
 import asciiPanel.AsciiPanel
 import mu.KotlinLogging
+import org.slf4j.Logger
 import ru.spbau.mit.softwaredesign.roguelike.items.*
 import ru.spbau.mit.softwaredesign.roguelike.world.FieldOfView
 import ru.spbau.mit.softwaredesign.roguelike.world.Point
 import ru.spbau.mit.softwaredesign.roguelike.world.World
 
 class Player(world: World) : Creature(world, '@', AsciiPanel.brightWhite, "player", 100, 7, 20, 5) {
-    private val logger = KotlinLogging.logger {}
+    private val logger: Logger = KotlinLogging.logger {}
 
     val fieldOfView: FieldOfView = FieldOfView(world)
     val inventory: Inventory = Inventory(20)
@@ -17,7 +18,7 @@ class Player(world: World) : Creature(world, '@', AsciiPanel.brightWhite, "playe
     var messages: MutableList<String>? = null
 
     override fun update() {
-        fieldOfView.update(position, visionRadius)
+        fieldOfView.update(position, maxVisionRadius)
         modifyFood(-1)
     }
 

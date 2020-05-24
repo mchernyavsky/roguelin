@@ -18,7 +18,7 @@ internal class PlayerTest {
         assertEquals(player.color, AsciiPanel.brightWhite)
         assertEquals(player.name, "player")
         assertEquals(player.maxHealth, 100)
-        assertEquals(player.visionRadius, 7)
+        assertEquals(player.maxVisionRadius, 7)
         assertEquals(player.originAttack, 20)
         assertEquals(player.originDefense, 5)
         assertNull(player.armor)

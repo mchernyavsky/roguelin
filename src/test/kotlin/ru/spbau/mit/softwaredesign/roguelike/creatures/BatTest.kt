@@ -14,7 +14,7 @@ internal class BatTest {
         assertEquals(bat.color, AsciiPanel.brightBlue)
         assertEquals(bat.name, "bat")
         assertEquals(bat.maxHealth, 15)
-        assertEquals(bat.visionRadius, 15)
+        assertEquals(bat.maxVisionRadius, 15)
         assertEquals(bat.originAttack, 5)
         assertEquals(bat.originDefense, 0)
         assertNull(bat.armor)

@@ -2,19 +2,18 @@ package ru.spbau.mit.softwaredesign.roguelike.world
 
 import java.awt.Color
 
-class Tile(glyph: Char, color: Color) : GameObject(glyph, color) {
+class Tile private constructor(glyph: Char, color: Color) : GameObject(glyph, color) {
     val isGround: Boolean
-        get() = this != Tile.WALL && this != Tile.BOUNDS
+        get() = this !== wall && this !== bounds
 
     val isDiggable: Boolean
-        get() = this == Tile.WALL
+        get() = this === wall
 
     companion object {
-        val FLOOR = Tile(250.toChar(), asciiPanel.AsciiPanel.yellow)
-        val WALL = Tile(177.toChar(), asciiPanel.AsciiPanel.yellow)
-        val BOUNDS = Tile('x', asciiPanel.AsciiPanel.brightBlack)
-        val EXIT = Tile('<', asciiPanel.AsciiPanel.white)
-        val UNKNOWN = Tile(' ', asciiPanel.AsciiPanel.white)
+        val floor: Tile = Tile(250.toChar(), asciiPanel.AsciiPanel.yellow)
+        val wall: Tile = Tile(177.toChar(), asciiPanel.AsciiPanel.yellow)
+        val bounds: Tile = Tile('x', asciiPanel.AsciiPanel.brightBlack)
+        val exit: Tile = Tile('<', asciiPanel.AsciiPanel.white)
+        val unknown: Tile = Tile(' ', asciiPanel.AsciiPanel.white)
     }
 }
-

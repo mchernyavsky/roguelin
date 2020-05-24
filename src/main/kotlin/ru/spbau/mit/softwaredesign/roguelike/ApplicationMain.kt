@@ -34,7 +34,7 @@ class ApplicationMain : JFrame(), KeyListener {
     override fun keyTyped(e: KeyEvent) {}
 }
 
-fun main(args: Array<String>) {
+fun main() {
     val application = ApplicationMain()
     application.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
     application.isVisible = true

@@ -14,7 +14,7 @@ internal class ZombieTest {
         assertEquals(zombie.color, AsciiPanel.green)
         assertEquals(zombie.name, "zombie")
         assertEquals(zombie.maxHealth, 30)
-        assertEquals(zombie.visionRadius, 5)
+        assertEquals(zombie.maxVisionRadius, 5)
         assertEquals(zombie.originAttack, 7)
         assertEquals(zombie.originDefense, 2)
         assertNull(zombie.armor)

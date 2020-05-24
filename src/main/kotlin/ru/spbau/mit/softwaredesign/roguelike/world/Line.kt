@@ -1,7 +1,7 @@
 package ru.spbau.mit.softwaredesign.roguelike.world
 
 class Line(from: Point, to: Point) : Iterable<Point> {
-    val points: List<Point>
+    private val points: List<Point>
 
     init {  // Bresenham's line algorithm
         val xDistance = Math.abs(to.x - from.x)

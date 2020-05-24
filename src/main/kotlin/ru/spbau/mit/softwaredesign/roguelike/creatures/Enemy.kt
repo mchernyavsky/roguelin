@@ -8,20 +8,33 @@ import ru.spbau.mit.softwaredesign.roguelike.world.World
 import java.awt.Color
 
 abstract class Enemy(
-        world: World,
-        glyph: Char, color: Color,
-        name: String,
-        maxHealth: Int,
-        visionRadius: Int,
-        originAttack: Int, originDefense: Int,
-        armor: Armor? = null, weapon: Weapon? = null
-) : Creature(world, glyph, color, name, maxHealth, visionRadius,
-             originAttack, originDefense, armor, weapon) {
+    world: World,
+    glyph: Char, color: Color,
+    name: String,
+    maxHealth: Int,
+    visionRadius: Int,
+    originAttack: Int,
+    originDefense: Int,
+    armor: Armor? = null,
+    weapon: Weapon? = null
+) : Creature(
+    world,
+    glyph,
+    color,
+    name,
+    maxHealth,
+    visionRadius,
+    originAttack,
+    originDefense,
+    armor,
+    weapon
+) {
     override fun notify(message: String) {}
 
     override fun canSee(otherPosition: Point): Boolean {
-        if ((position.x - otherPosition.x) * (position.x - otherPosition.x)
-                + (position.y - otherPosition.y) * (position.y - otherPosition.y) > visionRadius * visionRadius) {
+        val visionRadiusSquare = (position.x - otherPosition.x) * (position.x - otherPosition.x) +
+                (position.y - otherPosition.y) * (position.y - otherPosition.y)
+        if (visionRadiusSquare > maxVisionRadius * maxVisionRadius) {
             return false
         }
 
@@ -31,6 +44,7 @@ abstract class Enemy(
             }
             return false
         }
+
         return true
     }
 

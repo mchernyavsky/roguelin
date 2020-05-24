@@ -26,7 +26,7 @@ class PlayScreen(terminal: AsciiPanel) : Screen(terminal) {
 
     override fun repaint() {
         val left = Math.max(0, Math.min(player.position.x - width / 2, world.width - width))
-        val top =  Math.max(0, Math.min(player.position.y - height / 2, world.height - height))
+        val top = Math.max(0, Math.min(player.position.y - height / 2, world.height - height))
         val offset = Point(left, top)
         displayTiles(terminal, offset)
         displayMessages(terminal, messages)
@@ -72,10 +72,12 @@ class PlayScreen(terminal: AsciiPanel) : Screen(terminal) {
     }
 
     private fun hunger(): String =
-            if (player.food < player.maxFood * 0.15) "Starving"
-            else if (player.food < player.maxFood * 0.50) "Hungry"
-            else if (player.food > player.maxFood * 0.85) "Full"
-            else ""
+        when {
+            player.food < player.maxFood * 0.15 -> "Starving"
+            player.food < player.maxFood * 0.50 -> "Hungry"
+            player.food > player.maxFood * 0.85 -> "Full"
+            else -> ""
+        }
 
     private fun displayTiles(terminal: AsciiPanel, offset: Point) {
         for (x in 0 until width) {
@@ -99,7 +101,7 @@ class PlayScreen(terminal: AsciiPanel) : Screen(terminal) {
         messages.clear()
     }
 
-    private fun playerIsTryingToExit(): Boolean = world.getTile(player.position) == Tile.EXIT
+    private fun playerIsTryingToExit(): Boolean = world.getTile(player.position) == Tile.exit
 
     private fun exit(): Screen {
         if (player.inventory.items.find { it.name == "Grail" } != null) {

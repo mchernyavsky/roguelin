@@ -8,15 +8,16 @@ import ru.spbau.mit.softwaredesign.roguelike.world.Point
 import ru.spbau.mit.softwaredesign.roguelike.world.World
 
 import java.awt.Color
+import kotlin.math.max
 
 abstract class Creature(
-        val world: World,
-        glyph: Char, color: Color,
-        val name: String,
-        val maxHealth: Int,
-        val visionRadius: Int,
-        val originAttack: Int, val originDefense: Int,
-        armor: Armor? = null, weapon: Weapon? = null
+    val world: World,
+    glyph: Char, color: Color,
+    val name: String,
+    val maxHealth: Int,
+    val maxVisionRadius: Int,
+    val originAttack: Int, val originDefense: Int,
+    armor: Armor? = null, weapon: Weapon? = null
 ) : GameObject(glyph, color) {
     var health: Int = maxHealth
 
@@ -37,9 +38,9 @@ abstract class Creature(
     abstract fun notify(message: String)
 
     fun notifyAll(message: String) {
-        for (x in -visionRadius until visionRadius) {
-            for (y in -visionRadius until visionRadius) {
-                if (x * x + y * y > visionRadius * visionRadius) {
+        for (x in -maxVisionRadius until maxVisionRadius) {
+            for (y in -maxVisionRadius until maxVisionRadius) {
+                if (x * x + y * y > maxVisionRadius * maxVisionRadius) {
                     continue
                 }
 
@@ -60,7 +61,7 @@ abstract class Creature(
     fun moveBy(offset: Point) = move(position + offset)
 
     open fun attack(other: Creature) {
-        val amount = (Math.max(0, attack - other.defense) * Math.random()).toInt() + 1
+        val amount = (max(0, attack - other.defense) * Math.random()).toInt() + 1
         other.modifyHealth(-amount)
         notifyAll("attack the ${other.name} for $amount attack")
     }
@@ -79,7 +80,7 @@ abstract class Creature(
         }
     }
 
-    fun die() {
+    private fun die() {
         world.removeCreature(this)
         val corpse = Food('%', color, "$name's corpse", maxHealth / 2)
         world.dropItem(position, corpse)

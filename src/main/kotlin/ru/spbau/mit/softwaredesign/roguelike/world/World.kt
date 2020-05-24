@@ -10,12 +10,12 @@ import java.awt.Color
 
 class World(val width: Int, val height: Int) {
     val player: Player = Player(this)
-    private var tiles: Array<Array<Tile>> = Array(width) { Array(height) { Tile.UNKNOWN } }
+    private var tiles: Array<Array<Tile>> = Array(width) { Array(height) { Tile.unknown } }
     private val creatures: MutableList<Creature> = mutableListOf()
     private val items: MutableList<Item> = mutableListOf()
 
     init {
-        WorldInitializer.initialize(this)
+        initialize(this)
     }
 
     fun getGlyph(position: Point): Char = getGameObject(position).glyph
@@ -26,7 +26,7 @@ class World(val width: Int, val height: Int) {
         if (position.x in 0 until width && position.y in 0 until height) {
             return tiles[position.x][position.y]
         }
-        return Tile.BOUNDS
+        return Tile.bounds
     }
 
     fun getCreature(position: Point): Creature? = creatures.find { it.position == position }
@@ -39,32 +39,32 @@ class World(val width: Int, val height: Int) {
 
     fun dig(position: Point) {
         if (getTile(position).isDiggable) {
-            tiles[position.x][position.y] = Tile.FLOOR
+            tiles[position.x][position.y] = Tile.floor
         }
     }
 
     fun update() = creatures.forEach(Creature::update)
 
     fun putOnRandomEmptySpace(creature: Creature) {
-        val occupiedCells = creatures.map { it.position }.filterNotNull().toSet()
+        val occupiedCells = creatures.map { it.position }.toSet()
         val point = getRandomEmptyPoint(occupiedCells)
         creature.position = point
         creatures.add(creature)
     }
 
     fun putOnRandomEmptySpace(item: Item) {
-        val occupiedCells = items.map { it.position }.filterNotNull().toSet()
+        val occupiedCells = items.map { it.position }.toSet()
         val point = getRandomEmptyPoint(occupiedCells)
         item.position = point
         items.add(item)
     }
 
     fun dropItem(position: Point, item: Item): Boolean {
-        val occupiedCells = items.map { it.position }.filterNotNull().toSet()
-        val points: List<Point> = listOf(position, *position.neighbors)
-        points.forEach {
-            if (getTile(it).isGround && !occupiedCells.contains(it)) {
-                item.position = it
+        val occupiedCells = items.map { it.position }.toSet()
+        val points = listOf(position, *position.neighbors)
+        for (point in points) {
+            if (getTile(point).isGround && !occupiedCells.contains(point)) {
+                item.position = point
                 items.add(item)
                 return true
             }
@@ -73,12 +73,8 @@ class World(val width: Int, val height: Int) {
     }
 
     private fun getGameObject(position: Point): GameObject {
-        getCreature(position)?.let {
-            return it
-        }
-        getItem(position)?.let {
-            return it
-        }
+        getCreature(position)?.let { return it }
+        getItem(position)?.let { return it }
         return getTile(position)
     }
 
@@ -100,14 +96,14 @@ class World(val width: Int, val height: Int) {
         private fun randomizeTiles(world: World) {
             for (x in 0 until world.width) {
                 for (y in 0 until world.height) {
-                    world.tiles[x][y] = if (Math.random() < 0.7) Tile.FLOOR else Tile.WALL
+                    world.tiles[x][y] = if (Math.random() < 0.7) Tile.floor else Tile.wall
                 }
             }
         }
 
         private fun addExit(world: World) {
             val (x, y) = world.getRandomEmptyPoint()
-            world.tiles[x][y] = Tile.EXIT
+            world.tiles[x][y] = Tile.exit
         }
 
         private fun addItems(world: World, numArmors: Int, numWeapons: Int, numFood: Int, numMiscs: Int) {

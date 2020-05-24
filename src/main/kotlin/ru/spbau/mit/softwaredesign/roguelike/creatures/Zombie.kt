@@ -5,11 +5,11 @@ import ru.spbau.mit.softwaredesign.roguelike.world.World
 
 class Zombie(world: World) : Enemy(world, 'z', AsciiPanel.green, "zombie", 30, 5, 7, 2) {
     override fun update() {
-        position.neighbors
-                .map(world::getCreature)
-                .find { it is Player }?.let {
+        val player = position.neighbors.map(world::getCreature).find { it is Player }
+
+        if (player != null) {
             if (Math.random() > 0.5) {
-                attack(it)
+                attack(player)
             }
 
             return

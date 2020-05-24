@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent
 abstract class InventoryScreen(terminal: AsciiPanel, protected var player: Player) : Screen(terminal) {
     protected abstract val actionName: String
 
-    private val letters = 'a'..'z'
+    private val letters: CharRange = 'a'..'z'
 
     override fun repaint() {
         val items = player.inventory.items.filter(this::isAcceptable)
